@@ -71,7 +71,7 @@ pub fn encrypt(mut pic: image::DynamicImage, direction: Direction, x: f64, u: f6
                     p.push(pic.get_pixel(i, j));
                 }
                 let sort_map = quick_sort_trans(&mut v);
-                for j in 0..width {
+                for j in 0..height {
                     pic.put_pixel(i, sort_map[j as usize] as u32, p[j as usize]);
                 }
             }
@@ -90,7 +90,7 @@ pub fn dencrypt(mut pic: image::DynamicImage, direction: Direction, x: f64, u: f
     let (width, height) = pic.dimensions();
 
     match direction {
-        Direction::Row | Direction::Both => {
+        Direction::Row => {
             for i in 0..height {
 
                 // get logistic map x1 .. xn and clone pixels of this row
@@ -110,7 +110,7 @@ pub fn dencrypt(mut pic: image::DynamicImage, direction: Direction, x: f64, u: f
             }
         },
 
-        Direction::Col => {
+        Direction::Col | Direction::Both => {
             for i in 0..width {
                 let mut v = vec!();
                 let mut p = vec!();
@@ -119,15 +119,15 @@ pub fn dencrypt(mut pic: image::DynamicImage, direction: Direction, x: f64, u: f
                     p.push(pic.get_pixel(i, j));
                 }
                 let sort_map = quick_sort_trans(&mut v);
-                for j in 0..width {
-                    pic.put_pixel(i, sort_map[j as usize] as u32, p[j as usize]);
+                for j in 0..height {
+                    pic.put_pixel(i, j, p[sort_map[j as usize]]);
                 }
             }
         }
     }
 
     if let Direction::Both = direction {
-        return encrypt(pic, Direction::Col, x, u);
+        return dencrypt(pic, Direction::Row, x, u);
     }
 
     pic
