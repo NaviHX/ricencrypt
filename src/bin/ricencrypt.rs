@@ -29,27 +29,27 @@ impl Into<ricencrypt::Direction> for Direction {
 #[derive(Subcommand)]
 enum Command {
     Encrypt {
-        #[clap(arg_enum, value_parser)]
+        #[clap(long, short, arg_enum, value_parser, default_value_t = Direction::Row)]
         mode: Direction,
         #[clap(value_parser)]
         input_file: String,
         #[clap(value_parser, default_value_t = String::from("a.jpg"))]
         output_file: String,
-        #[clap(value_parser, default_value_t = 0.666)]
+        #[clap(long, short, value_parser, default_value_t = 0.666)]
         x: f64,
-        #[clap(value_parser, default_value_t = 3.99999)]
+        #[clap(long, short, value_parser, default_value_t = 3.99999)]
         u: f64,
     },
     Dencrypt {
-        #[clap(arg_enum, value_parser)]
+        #[clap(long, short, arg_enum, value_parser, default_value_t = Direction::Row)]
         mode: Direction,
         #[clap(value_parser)]
         input_file: String,
         #[clap(value_parser, default_value_t = String::from("a.jpg"))]
         output_file: String,
-        #[clap(value_parser, default_value_t = 0.666)]
+        #[clap(long, short, value_parser, default_value_t = 0.666)]
         x: f64,
-        #[clap(value_parser, default_value_t = 3.99999)]
+        #[clap(long, short, value_parser, default_value_t = 3.99999)]
         u: f64,
     },
 }
